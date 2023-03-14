@@ -4,12 +4,12 @@ const userForm = new UserForm();
 
 userForm.loginFormCallback = (data) => {
   ApiConnector.login(data, response => {
-    response.success ? location.reload() : userForm.setLoginErrorMessage('Неверные логин или пароль');
-  });
+    response.success ? location.reload() : userForm.setLoginErrorMessage(response.error);
+});
 }
 
 userForm.registerFormCallback = (data) => {
   ApiConnector.register(data, response => {
-    response.success ? location.reload() : userForm.setRegisterErrorMessage('Пользователь с данным логином уже существует');
-  });
+    response.success ? location.reload() : userForm.setRegisterErrorMessage(response.error);
+});
 }
