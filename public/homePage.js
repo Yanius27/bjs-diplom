@@ -30,7 +30,7 @@ moneyManager.addMoneyCallback = (data) => ApiConnector.addMoney(data, (response)
   if(response.success) {
     ProfileWidget.showProfile(response.data);
   }
-  let message = response.success ? 'Пополнение счёта прошло успешно' : new Error('Невалидное значение и/или не выбрана валюта');
+  let message = response.success ? 'Пополнение счёта прошло успешно' : response.error;
   moneyManager.setMessage(response.success, message);
 });
 
@@ -38,7 +38,7 @@ moneyManager.conversionMoneyCallback = (data) => ApiConnector.convertMoney(data,
   if(response.success) {
     ProfileWidget.showProfile(response.data);
   }
-  let message = response.success ? 'Конвертация прошла успешно' : new Error('Невалидное значение и/или не выбраны валюты');
+  let message = response.success ? 'Конвертация прошла успешно' : response.error;
   moneyManager.setMessage(response.success, message);
 });
 
@@ -46,7 +46,7 @@ moneyManager.sendMoneyCallback = (data) => ApiConnector.transferMoney(data, (res
   if(response.success) {
     ProfileWidget.showProfile(response.data);
   }
-  let message = response.success ? 'Перевод средств прошёл успешно' : new Error('Невалидное значение и/или не выбрана валюта и/или не выбран адресат');
+  let message = response.success ? 'Перевод средств прошёл успешно' : response.error;
   moneyManager.setMessage(response.success, message);
 });
 
@@ -65,8 +65,8 @@ favoritesWidget.addUserCallback = (data) => ApiConnector.addUserToFavorites(data
     favoritesWidget.fillTable(response.data);
     moneyManager.updateUsersList(response.data);
   }
-  let message = response.success ? 'Пользователь добавлен в избранное' : new Error('Неверное имя пользователя и/или id');
-  moneyManager.setMessage(response.success, message);
+  let message = response.success ? 'Пользователь добавлен в избранное' : response.error;
+  favoritesWidget.setMessage(response.success, message);
 });
 
 favoritesWidget.removeUserCallback = (data) => ApiConnector.removeUserFromFavorites(data, (response) => {
@@ -75,6 +75,6 @@ favoritesWidget.removeUserCallback = (data) => ApiConnector.removeUserFromFavori
     favoritesWidget.fillTable(response.data);
     moneyManager.updateUsersList(response.data);
   }
-  let message = response.success ? 'Пользователь удалён из избранного' : new Error('Произошла ошибка');
-  moneyManager.setMessage(response.success, message);
+  let message = response.success ? 'Пользователь удалён из избранного' : response.error;
+  favoritesWidget.setMessage(response.success, message);
 });
